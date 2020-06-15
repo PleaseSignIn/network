@@ -3,18 +3,17 @@
 class ThreadBase
 {
 private:
-    pthread_t id;
+    pthread_t t_id;
 
-    void* start_func(void* arg);
+    static void* ThreadFunc(void* arg);
 
 public:
-    ThreadBase();
-    int start();
-    int join();
-    int quit();
+    ThreadBase() {};
+    int Start();
+    int Join();
 
-    pthread_t getTid();
+    pthread_t GetTid();
 
-    virtual void task() = 0;
-    virtual ~ThreadBase();
+    virtual void Run() = 0;
+    virtual ~ThreadBase() {};
 };

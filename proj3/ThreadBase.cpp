@@ -1,20 +1,23 @@
 #include"ThreadBase.h"
 
-ThreadBase::ThreadBase() {}
-
-ThreadBase::~ThreadBase()
+pthread_t ThreadBase::GetTid()
 {
-
+    return t_id;
 }
 
-ThreadBase::getTid()
+int ThreadBase::Start()
 {
-    return id;
+    return pthread_create(&t_id, NULL, ThreadFunc, this);
 }
 
-ThreadBase::start()
+void* ThreadBase::ThreadFunc(void * arg)
 {
-    return pthread_create(&id, NULL, start_func, (void*)this);
+    ThreadBase *ptr = (ThreadBase*) arg;
+    ptr->Run();
+    pthread_exit(0);
 }
 
-ThreadBase::
+int ThreadBase::Join()
+{
+    pthread_join(t_id, NULL);
+}
