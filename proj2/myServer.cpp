@@ -2,7 +2,13 @@
 
 void myServer::serverFunction(int socket)
 {
-    write(socket, "Hello World\n", 13);
+    char buffer[40] = {'\0'};
+    while(buffer[0] != 'q' || buffer[1] != '\0')
+    {
+        read(socket, buffer, 40);
+
+        cout<<buffer<<endl;
+    }
 }
 
 int main()

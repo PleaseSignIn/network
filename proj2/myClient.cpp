@@ -3,11 +3,13 @@
 
 void myClient::clientFunction(int socket)
 {
-    char buffer[20];
-
-    read(socket, buffer, 20);
-
-    cout<<buffer<<endl;
+    string input;
+    cout<<"input to send to server:\n";
+    while(input != "q")
+    {
+        getline(cin, input, '\n');
+        write(socket, input.c_str(), input.length()+1);
+    }
 }
 
 int main()
