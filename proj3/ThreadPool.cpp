@@ -25,6 +25,11 @@ ThreadPool::~ThreadPool()
         }
     }
     lock.UnLock();
+
+    for(auto thread : threads)
+    {
+        delete(thread);
+    }
 }
 
 void ThreadRoutine::Run()
@@ -65,7 +70,6 @@ void ThreadRoutine::Run()
             pool->lock.UnLock();
             break;
         }
-
         pool->lock.UnLock();
     }
     std::cout<<"Thread " << GetTid() << " exiting.\n";
@@ -73,6 +77,34 @@ void ThreadRoutine::Run()
 
 void ThreadPool::AddTask(TASK run, void* arg)
 {
-    
+    task* t = new task;
+    t->run = run;
+    t->arg = arg;
+    t->next = NULL;
+
+    lock.Lock();
+
+    if(first)
+    {
+        last->next = t;
+    }
+    else
+    {
+        first->next = t;
+    }
+    last = t;
+
+    if(idleThreads>0)
+    {
+        cond.Signal();
+    }
+    else if(threadCount < maxThreads)
+    {
+        ThreadRoutine* thread = new ThreadRoutine(this);
+        threads.push_back(thread);
+        thread->Start();
+        threadCount++;
+    }
+    lock.UnLock();
 }
 
