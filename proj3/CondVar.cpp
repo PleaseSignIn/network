@@ -12,7 +12,7 @@ CondVar::~CondVar()
 
 int CondVar::Wait(MutexLock& lock)
 {
-    return pthread_cond_wait(&cond, &lock.GetLock());
+    return pthread_cond_wait(&cond, lock.GetLock());
 }
 
 int CondVar::Signal()

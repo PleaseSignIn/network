@@ -34,7 +34,7 @@ ThreadPool::~ThreadPool()
 
 void ThreadRoutine::Run()
 {
-    std::cout<<"Thread " << GetTid() << " starting.\n";
+    std::cerr<<"Thread " << GetTid() << " starting.\n" << std::flush;
 
     while (true)
     {
@@ -43,7 +43,7 @@ void ThreadRoutine::Run()
 
         while (pool->first==NULL && pool->quit==false)
         {
-            std::cout<<"Thread " << GetTid() << " waiting.\n";
+            std::cerr<<"Thread " << GetTid() << " waiting.\n" << std::flush;
             pool->cond.Wait(pool->lock);
         }
         pool->idleThreads--;
@@ -72,7 +72,7 @@ void ThreadRoutine::Run()
         }
         pool->lock.UnLock();
     }
-    std::cout<<"Thread " << GetTid() << " exiting.\n";
+    std::cerr<<"Thread " << GetTid() << " exiting.\n" << std::flush;
 }
 
 void ThreadPool::AddTask(TASK run, void* arg)
@@ -90,7 +90,7 @@ void ThreadPool::AddTask(TASK run, void* arg)
     }
     else
     {
-        first->next = t;
+        first = t;
     }
     last = t;
 
@@ -107,4 +107,3 @@ void ThreadPool::AddTask(TASK run, void* arg)
     }
     lock.UnLock();
 }
-

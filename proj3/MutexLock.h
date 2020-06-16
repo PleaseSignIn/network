@@ -9,6 +9,6 @@ public:
     ~MutexLock();
     int Lock();
     int UnLock();
-    pthread_mutex_t GetLock();
+    pthread_mutex_t* GetLock();
 };
 

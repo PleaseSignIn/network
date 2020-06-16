@@ -19,5 +19,5 @@ void* ThreadBase::ThreadFunc(void * arg)
 
 int ThreadBase::Join()
 {
-    pthread_join(t_id, NULL);
+    return pthread_join(t_id, NULL);
 }

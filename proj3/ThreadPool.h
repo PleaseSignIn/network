@@ -11,9 +11,10 @@ struct task
     task* next;
 };
 
+class ThreadRoutine;
+
 class ThreadPool
 {
-    friend class ThreadRoutine;
 private:
     CondVar cond;
     MutexLock lock;
@@ -28,6 +29,7 @@ public:
     ThreadPool(int maxThreads):maxThreads(maxThreads) {};
     ~ThreadPool();
     void AddTask(TASK run, void* arg);
+    friend class ThreadRoutine;
 };
 
 class ThreadRoutine : public ThreadBase

@@ -20,7 +20,7 @@ int MutexLock::UnLock()
     return pthread_mutex_unlock(&lock);
 }
 
-pthread_mutex_t MutexLock::GetLock()
+pthread_mutex_t* MutexLock::GetLock()
 {
-    return lock;
+    return &lock;
 }
