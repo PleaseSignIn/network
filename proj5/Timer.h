@@ -1,10 +1,10 @@
 class Timer
 {
 private:
-    int timeSpan;
-    bool needRestart;
-    Timer * next = nullptr;
-    bool registed = false;
+    int timeSpan;    //时间间隔
+    bool needRestart;  //重复
+    Timer * next = nullptr;  //指向同一时间的下一个timer
+    bool registed = false;   //已注册到时间轮
     bool stopped = false;
 public:
     Timer() {};

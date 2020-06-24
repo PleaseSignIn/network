@@ -1,6 +1,6 @@
-#include"serverBase.h"
+#include"TCPServerBase.h"
 
-int serverBase::run()
+int TCPServerBase::run()
 {
     int listenSocket = socket(AF_INET, SOCK_STREAM, 0);
     if(listenSocket == -1)

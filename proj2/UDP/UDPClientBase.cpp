@@ -1,8 +1,8 @@
-#include"clientBase.h"
+#include"UDPClientBase.h"
 
-int clientBase::run()
+int UDPClientBase::run()
 {
-    int clientSocket = socket(AF_INET,SOCK_STREAM,0);
+    int clientSocket = socket(AF_INET,SOCK_DGRAM,0);
     if(clientSocket==-1)
     {
         cout<<"socket error"<<endl;
@@ -20,16 +20,7 @@ int clientBase::run()
 
     serverAddress.sin_port=htons(this->port);
 
-    if(connect(clientSocket, (sockaddr*)&serverAddress, sizeof(serverAddress))!=0)
-    {
-        cout<<"connect error\n";
-        return -1;
-    }
+    clientFunction(clientSocket, &serverAddress); 
 
-    clientFunction(clientSocket); 
-
-    close(clientSocket);
     return 0;
 }
-
-
